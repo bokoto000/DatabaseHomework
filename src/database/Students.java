@@ -27,7 +27,7 @@ public class Students {
 	public void addRow(String ID, String first_name, String last_name, String Faculty)throws SQLException
 	{
 		try {
-			conn.prepareStatement("INSERT INTO STUDENTS (ID, FIRST_NAME, LAST_NAME) VALUES ("+ID+", '"+
+			conn.prepareStatement("INSERT INTO STUDENTS (ID, FIRST_NAME, LAST_NAME, FACULTY) VALUES ("+ID+", '"+
 			first_name+"', '"+last_name+"','"+Faculty+"')").executeUpdate();
 			
 			}
@@ -40,7 +40,7 @@ public class Students {
 	public void removeRow(String ID)throws SQLException
 	{
 		try {
-			conn.prepareStatement("DELETE FROM Students\r\n" + "WHERE ID="+ID+")").executeUpdate();
+			conn.prepareStatement("DELETE FROM Students\r\n" + "WHERE ID="+ID).executeUpdate();
 			}
 		catch (Exception e)
 		{

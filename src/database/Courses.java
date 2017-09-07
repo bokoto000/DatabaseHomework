@@ -71,7 +71,7 @@ public class Courses {
 	public void removeRow(String name)throws SQLException
 	{
 			try {
-				conn.prepareStatement("DELETE FROM COURSES\r\n" + "WHERE NAME="+name+")").executeUpdate();
+				conn.prepareStatement("DELETE FROM COURSES\r\n" + "WHERE NAME="+name).executeUpdate();
 				}
 			catch (Exception e)
 			{

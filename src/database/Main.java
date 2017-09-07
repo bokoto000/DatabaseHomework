@@ -29,9 +29,13 @@ public class Main {
 			Scanner scan=new Scanner(System.in);
 			String n=scan.nextLine();
 			String[] props=n.split(" ");
-			if(props[0].equals("add")&&props[1].equals("student"))studentTable.addRow(props[2], props[3], props[4],props[5]);
-			if(props[0].equals("add")&&props[1].equals("faculty"))facultyTable.addRow(props[2], props[3]);
-			if(props[0].equals("add")&&props[1].equals("coursesTable"))coursesTable.addRow(props[2], props[3],props[4], props[5]);
+			if(props[0].equals("add")&&props[1].equals("student"))studentTable.addRow(props[2], props[3], props[4],props[5]);//id name second name faculty
+			if(props[0].equals("add")&&props[1].equals("faculty"))facultyTable.addRow(props[2], props[3]);//id name
+			if(props[0].equals("add")&&props[1].equals("courses"))coursesTable.addRow(props[2], props[3],props[4], props[5]);//id name desc credits
+			if(props[0].equals("add")&&props[1].equals("courseToStudent"))
+			{
+				studentCourses.addRow(props[2], props[3]);//student id + course iD
+			}
 			if(props[0].equals("delete")&&props[1].equals("student"))
 				{
 				studentTable.removeRow(props[2]);//needs ID
@@ -58,7 +62,12 @@ public class Main {
 			{
 				coursesTable.show();
 			}
+			
 		}}
+		catch (Exception e)
+		{
+			System.out.println(e);
+		}
 		finally
 		{conn.close();}
 		

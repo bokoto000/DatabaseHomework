@@ -50,7 +50,7 @@ public class Faculty {
 	public void getID(String NAME)throws SQLException
 	{
 		try {
-			conn.prepareStatement("SELECT ID FROM FACULTY\r\n" + "WHERE NAME="+NAME+")").executeUpdate();
+			conn.prepareStatement("SELECT ID FROM FACULTY\r\n" + "WHERE NAME="+NAME).executeUpdate();
 			}
 		catch (Exception e)
 		{

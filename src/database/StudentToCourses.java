@@ -16,14 +16,28 @@ public class StudentToCourses {
 		this.conn=conn;
 		PreparedStatement prepareStatement ;
 		try {
-			conn.prepareStatement("CREATE TABLE StudentToCourses (ID INTEGER PRIMARY KEY, COURSEID INTEGER").executeUpdate();
+			conn.prepareStatement("CREATE TABLE StudentToCourses (ID INTEGER PRIMARY KEY, COURSEID INTEGER)").executeUpdate();
 			}
 		catch (Exception e)
 		{
 			System.out.println(e);
 		}
 	}
-	
+	public void showStudents(String ID)
+	{
+		try {                                                                                     
+            
+			ResultSet executeQuery=conn.prepareStatement("SELECT * FROM StudentToCourses WHERE ID=ID").executeQuery(); 
+			while(executeQuery.next())                                                            
+			{                                                                                     
+				System.out.println(executeQuery.getInt(1)+" | " + executeQuery.getString(2));     
+			}                                                                                     
+		}                                                                                         
+		catch (Exception e)                                                                       
+		{                                                                                         
+			System.out.println(e);                                                                
+		}                                                                                         
+	}
 	public void addRow(String ID, String NAME)throws SQLException
 	{
 		try {
@@ -39,7 +53,7 @@ public class StudentToCourses {
 	public void removeRow(String ID)throws SQLException
 	{
 		try {
-			conn.prepareStatement("DELETE  FROM FACULTY\r\n" + "WHERE ID="+ID+")").executeUpdate();
+			conn.prepareStatement("DELETE  FROM FACULTY\r\n" + "WHERE ID="+ID).executeUpdate();
 			}
 		catch (Exception e)
 		{
@@ -49,7 +63,7 @@ public class StudentToCourses {
 	public void removeRows(int id)throws SQLException
 	{
 		try {
-			conn.prepareStatement("DELETE  FROM FACULTY\r\n" + "WHERE COURSEID="+id+")").executeUpdate();
+			conn.prepareStatement("DELETE  FROM FACULTY\r\n" + "WHERE COURSEID="+id).executeUpdate();
 			}
 		catch (Exception e)
 		{
