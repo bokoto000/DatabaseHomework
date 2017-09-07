@@ -8,16 +8,12 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class Faculty {
-	public String url="jdbc:postgresql://localhost/GeekyCamp";
-	public Properties props=new Properties();
-	private Connection conn=DriverManager.getConnection(url,props);
+	private Connection conn;
 	private  String name;
-	public Faculty()throws SQLException
+	public Faculty(Connection conn)throws SQLException
 	{
 		this.name=name;
-		props.setProperty("user", "postgres");
-		props.setProperty("password", "123456ok");
-		conn=DriverManager.getConnection(url,props);
+		this.conn=conn;
 		PreparedStatement prepareStatement ;
 		try {
 			//conn.prepareStatement("CREATE TABLE FACULTY (ID INTEGER PRIMARY KEY, NAME VARCHAR(20))").executeUpdate();
@@ -73,6 +69,23 @@ public class Faculty {
 			conn.close();
 		}
 	}
-	
+	public void show() throws SQLException
+	{
+		try {
+			
+			ResultSet executeQuery=conn.prepareStatement("SELECT * FROM Faculty").executeQuery();
+			while(executeQuery.next())
+			{
+				System.out.println(executeQuery.getInt(1)+" | " + executeQuery.getString(2));
+			}
+		}
+		catch (Exception e)
+		{
+			System.out.println(e);
+		}
+		finally {
+			conn.close();
+		}
+	}
 
 }

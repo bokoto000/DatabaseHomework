@@ -8,16 +8,12 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class Courses {
-	public String url="jdbc:postgresql://localhost/GeekyCamp";
-	public Properties props=new Properties();
-	private Connection conn=DriverManager.getConnection(url,props);
+	private Connection conn;
 	private  String name;
-	public Courses()throws SQLException
+	public Courses(Connection conn)throws SQLException
 	{
 		this.name=name;
-		props.setProperty("user", "postgres");
-		props.setProperty("password", "123456ok");
-		conn=DriverManager.getConnection(url,props);
+		this.conn=conn;
 		PreparedStatement prepareStatement ;
 		try {
 			//conn.prepareStatement("CREATE TABLE COURSES (ID INTEGER PRIMARY KEY, NAME VARCHAR(20),DESCRIPTION VARCHAR(20), CREDITS INTEGER)").executeUpdate();
@@ -34,7 +30,7 @@ public class Courses {
 	public void addRow(String ID, String NAME, String DESCRIPTION, String CREDITS)throws SQLException
 	{
 		try {
-			conn.prepareStatement("INSERT INTO COURSES (ID, FIRST_NAME, LAST_NAME) VALUES ("+ID+", '"+NAME+"', '"+DESCRIPTION+"', "+ CREDITS+")").executeUpdate();
+			conn.prepareStatement("INSERT INTO COURSES (ID, NAME, DESCRIPTION, CREDITS) VALUES ("+ID+", '"+NAME+"', '"+DESCRIPTION+"', "+ CREDITS+")").executeUpdate();
 			
 			}
 		catch (Exception e)
@@ -46,10 +42,56 @@ public class Courses {
 		}
 	}
 	
-	
-	public void removeRow()
+	public int returnID(String n)throws SQLException
 	{
-		
+		try {
+			conn.prepareStatement("SELECT FROM COURSES WHERE NAME='"+n+"'").executeUpdate();
+			ResultSet executeQuery=conn.prepareStatement("SELECT FROM COURSES WHERE NAME='"+n+"'").executeQuery();
+			while(executeQuery.next())
+			{
+				return executeQuery.getInt(1);
+				
+			}
+		}
+		catch (Exception e)
+		{
+			System.out.println(e);
+		}
+		finally {
+			conn.close();
+		}
+		return -1;
+	}
+	public void show() throws SQLException
+	{
+		try {
+			
+			ResultSet executeQuery=conn.prepareStatement("SELECT * FROM Courses").executeQuery();
+			while(executeQuery.next())
+			{
+				System.out.println(executeQuery.getInt(1)+" | " + executeQuery.getString(2)+" | " + executeQuery.getString(3)+" | " + executeQuery.getInt(4));
+			}
+		}
+		catch (Exception e)
+		{
+			System.out.println(e);
+		}
+		finally {
+			conn.close();
+		}
+	}
+	public void removeRow(String name)throws SQLException
+	{
+			try {
+				conn.prepareStatement("DELETE FROM COURSES\r\n" + "WHERE NAME="+name+")").executeUpdate();
+				}
+			catch (Exception e)
+			{
+				System.out.println(e);
+			}
+			finally {
+				conn.close();
+			}
 	}
 
 }

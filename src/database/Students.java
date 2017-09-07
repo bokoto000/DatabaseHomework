@@ -8,19 +8,15 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class Students {
-	public String url="jdbc:postgresql://localhost/GeekyCamp";
-	public Properties props=new Properties();
-	private Connection conn=DriverManager.getConnection(url,props);
+	private Connection conn;
 	private  String name;
-	public Students()throws SQLException
+	public Students(Connection conn)throws SQLException
 	{
 		this.name=name;
-		props.setProperty("user", "postgres");
-		props.setProperty("password", "123456ok");
-		conn=DriverManager.getConnection(url,props);
+		this.conn=conn;
 		PreparedStatement prepareStatement ;
 		try {
-			//conn.prepareStatement("CREATE TABLE STUDENTS (ID INTEGER PRIMARY KEY, FIRST_NAME VARCHAR(20),LAST_NAME VARCHAR(20))").executeUpdate();
+			//conn.prepareStatement("CREATE TABLE STUDENTS (ID INTEGER PRIMARY KEY, FIRST_NAME VARCHAR(20),LAST_NAME VARCHAR(20),FACULTY VARCHAR(20))").executeUpdate();
 			}
 		catch (Exception e)
 		{
@@ -31,10 +27,11 @@ public class Students {
 		}
 	}
 	
-	public void addRow(String ID, String first_name, String last_name)throws SQLException
+	public void addRow(String ID, String first_name, String last_name, String Faculty)throws SQLException
 	{
 		try {
-			conn.prepareStatement("INSERT INTO STUDENTS (ID, FIRST_NAME, LAST_NAME) VALUES ("+ID+", '"+first_name+"', '"+last_name+")").executeUpdate();
+			conn.prepareStatement("INSERT INTO STUDENTS (ID, FIRST_NAME, LAST_NAME) VALUES ("+ID+", '"+
+			first_name+"', '"+last_name+"','"+Faculty+"')").executeUpdate();
 			
 			}
 		catch (Exception e)
@@ -59,6 +56,35 @@ public class Students {
 			conn.close();
 		}
 	}
-	
-
+	public void removeRows(String s)throws SQLException
+	{
+		try {
+			ResultSet executeQuery=conn.prepareStatement("SELECT FROM Students WHERE FACULTY='"+s+"')").executeQuery();
+		}
+		catch (Exception e)
+		{
+			System.out.println(e);
+		}
+		finally {
+			conn.close();
+		}
+	}
+	public void show() throws SQLException
+	{
+		try {
+			
+			ResultSet executeQuery=conn.prepareStatement("SELECT * FROM STUDENTS").executeQuery();
+			while(executeQuery.next())
+			{
+				System.out.println(executeQuery.getInt(1)+" | " + executeQuery.getString(2)+" | " + executeQuery.getString(3)+" | " + executeQuery.getString(4));
+			}
+		}
+		catch (Exception e)
+		{
+			System.out.println(e);
+		}
+		finally {
+			conn.close();
+		}
+	}
 }

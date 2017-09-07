@@ -8,19 +8,15 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class StudentToCourses {
-	public String url="jdbc:postgresql://localhost/GeekyCamp";
-	public Properties props=new Properties();
-	private Connection conn=DriverManager.getConnection(url,props);
+	private Connection conn;
 	private  String name;
-	public StudentToCourses()throws SQLException
+	public StudentToCourses(Connection conn)throws SQLException
 	{
 		this.name=name;
-		props.setProperty("user", "postgres");
-		props.setProperty("password", "123456ok");
-		conn=DriverManager.getConnection(url,props);
+		this.conn=conn;
 		PreparedStatement prepareStatement ;
 		try {
-			//conn.prepareStatement("CREATE TABLE FACULTY (ID INTEGER PRIMARY KEY, NAME VARCHAR(20))").executeUpdate();
+			//conn.prepareStatement("CREATE TABLE StudentToCourses (ID INTEGER PRIMARY KEY, COURSEID INTEGER").executeUpdate();
 			}
 		catch (Exception e)
 		{
@@ -31,10 +27,10 @@ public class StudentToCourses {
 		}
 	}
 	
-	public void addRow(int ID, String NAME)throws SQLException
+	public void addRow(String ID, String NAME)throws SQLException
 	{
 		try {
-			conn.prepareStatement("INSERT INTO FACULTY (ID, NAME) VALUES ("+ID+", '"+NAME+"')").executeUpdate();
+			conn.prepareStatement("INSERT INTO SudentToCourses (ID, COURSEID) VALUES ("+ID+", '"+NAME+"')").executeUpdate();
 			
 			}
 		catch (Exception e)
@@ -46,10 +42,23 @@ public class StudentToCourses {
 		}
 	}
 	
-	public void removeRow(String NAME)throws SQLException
+	public void removeRow(String ID)throws SQLException
 	{
 		try {
-			conn.prepareStatement("DELETE FROM FACULTY\r\n" + "WHERE ID="+NAME+")").executeUpdate();
+			conn.prepareStatement("DELETE  FROM FACULTY\r\n" + "WHERE ID="+ID+")").executeUpdate();
+			}
+		catch (Exception e)
+		{
+			System.out.println(e);
+		}
+		finally {
+			conn.close();
+		}
+	}
+	public void removeRows(int id)throws SQLException
+	{
+		try {
+			conn.prepareStatement("DELETE  FROM FACULTY\r\n" + "WHERE COURSEID="+id+")").executeUpdate();
 			}
 		catch (Exception e)
 		{
@@ -60,5 +69,4 @@ public class StudentToCourses {
 		}
 	}
 	
-
 }

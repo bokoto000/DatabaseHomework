@@ -13,23 +13,54 @@ public class Main {
 	public static void main(String[] args) throws SQLException 
 	{
 		
-		Students studentTable=new Students();
-		Courses coursesTable=new Courses();
-		Faculty facultyTable=new Faculty();
-		StudentToCourses studentCourses=new StudentToCourses();
+		String url="jdbc:postgresql://localhost/GeekyCamp";
+		Properties propsi=new Properties();
+		propsi.setProperty("user", "postgres");
+		propsi.setProperty("password", "123456ok");
+		Connection conn=DriverManager.getConnection(url,propsi);
+		
+		try{
+		Students studentTable=new Students(conn);
+		Courses coursesTable=new Courses(conn);
+		Faculty facultyTable=new Faculty(conn);
+		StudentToCourses studentCourses=new StudentToCourses(conn);
 		for(;;)
 		{
 			Scanner scan=new Scanner(System.in);
 			String n=scan.nextLine();
 			String[] props=n.split(" ");
-			if(props[0]=="add"&&props[1]=="student")studentTable.addRow(props[2], props[3], props[4]);
-			if(props[0]=="add"&&props[1]=="faculty")facultyTable.addRow(props[2], props[3]);
-			if(props[0]=="add"&&props[1]=="coursesTable")coursesTable.addRow(props[2], props[3],props[4], props[5]);
-			if(props[0]=="delete"&&props[1]=="student")studentTable.removeRow(props[2]);
-			if(props[0]=="delete"&&props[1]=="faculty") {
+			if(props[0].equals("add")&&props[1].equals("student"))studentTable.addRow(props[2], props[3], props[4],props[5]);
+			if(props[0].equals("add")&&props[1].equals("faculty"))facultyTable.addRow(props[2], props[3]);
+			if(props[0].equals("add")&&props[1].equals("coursesTable"))coursesTable.addRow(props[2], props[3],props[4], props[5]);
+			if(props[0].equals("delete")&&props[1].equals("student"))
+				{
+				studentTable.removeRow(props[2]);//needs ID
+				studentCourses.removeRow(props[2]);//needs ID
+				}
+			if(props[0].equals("delete")&&props[1].equals("faculty")) {
+				studentTable.removeRows(props[2]);
 				facultyTable.removeRow(props[2]);
-			    
 			}
-		}
+			if(props[0].equals("delete")&&props[1].equals("course"))
+			{
+				studentCourses.removeRows(coursesTable.returnID(props[2]));
+				coursesTable.removeRow(props[2]);
+			}
+			if(props[0].equals("show")&&props[1].equals("students"))
+			{
+				studentTable.show();
+			}
+			if(props[0].equals("show")&&props[1].equals("faculties"))
+			{
+				facultyTable.show();
+			}
+			if(props[0].equals("show")&&props[1].equals("courses"))
+			{
+				coursesTable.show();
+			}
+		}}
+		finally
+		{conn.close();}
 		
 	}
+}
