@@ -16,14 +16,11 @@ public class Faculty {
 		this.conn=conn;
 		PreparedStatement prepareStatement ;
 		try {
-			//conn.prepareStatement("CREATE TABLE FACULTY (ID INTEGER PRIMARY KEY, NAME VARCHAR(20))").executeUpdate();
+			conn.prepareStatement("CREATE TABLE FACULTY (ID INTEGER PRIMARY KEY, NAME VARCHAR(20))").executeUpdate();
 			}
 		catch (Exception e)
 		{
 			System.out.println(e);
-		}
-		finally {
-			conn.close();
 		}
 	}
 	
@@ -37,9 +34,6 @@ public class Faculty {
 		{
 			System.out.println(e);
 		}
-		finally {
-			conn.close();
-		}
 	}
 	
 	public void removeRow(String NAME)throws SQLException
@@ -51,9 +45,6 @@ public class Faculty {
 		{
 			System.out.println(e);
 		}
-		finally {
-			conn.close();
-		}
 	}
 	
 	public void getID(String NAME)throws SQLException
@@ -64,9 +55,6 @@ public class Faculty {
 		catch (Exception e)
 		{
 			System.out.println(e);
-		}
-		finally {
-			conn.close();
 		}
 	}
 	public void show() throws SQLException
@@ -82,9 +70,6 @@ public class Faculty {
 		catch (Exception e)
 		{
 			System.out.println(e);
-		}
-		finally {
-			conn.close();
 		}
 	}
 
